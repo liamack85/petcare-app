@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+  CLIENT
+}
+
+enum ServiceType {
+  WALK
+  SITTING
+  FEEDING
+  GROOMING
+  MEDICATION
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  phone     String?
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pets         Pet[]
+  appointments Appointment[] @relation("ClientAppointments")
+  assigned     Appointment[] @relation("EmployeeAppointments")
+  reports      VisitReport[]
+}
+
+model Pet {
+  id         String   @id @default(cuid())
+  name       String
+  species    String
+  breed      String?
+  age        Int?
+  notes      String?
+  vetName    String?
+  vetPhone   String?
+  medication String?
+  createdAt  DateTime @default(now())
+
+  ownerId      String
+  owner        User          @relation(fields: [ownerId], references: [id])
+  appointments Appointment[]
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  date      DateTime
+  status    String   @default("PENDING")
+  notes     String?
+  createdAt DateTime @default(now())
+
+  clientId   String
+  client     User    @relation("ClientAppointments", fields: [clientId], references: [id])
+  employeeId String?
+  employee   User?   @relation("EmployeeAppointments", fields: [employeeId], references: [id])
+  petId      String
+  pet        Pet     @relation(fields: [petId], references: [id])
+
+  services AppointmentService[]
+  report   VisitReport?
+}
+
+model AppointmentService {
+  id          String      @id @default(cuid())
+  serviceType ServiceType
+
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+}
+
+model VisitReport {
+  id          String   @id @default(cuid())
+  notes       String
+  feedingDone Boolean  @default(false)
+  waterDone   Boolean  @default(false)
+  duration    Int?
+  createdAt   DateTime @default(now())
+
+  appointmentId String      @unique
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  employeeId    String
+  employee      User        @relation(fields: [employeeId], references: [id])
+  photos        Photo[]
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  createdAt DateTime @default(now())
+
+  reportId String
+  report   VisitReport @relation(fields: [reportId], references: [id])
+}

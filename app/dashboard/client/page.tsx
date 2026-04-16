@@ -34,12 +34,15 @@ export default async function ClientDashboard() {
             View and request appointments
           </p>
         </Link>
-        <div className="p-6 border rounded-lg">
+        <Link
+          href="/dashboard/client/reports"
+          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+        >
           <h2 className="text-lg font-semibold">Visit Reports</h2>
           <p className="text-gray-500 text-sm mt-1">
             See reports and photos from visits
           </p>
-        </div>
+        </Link>
         <div className="p-6 border rounded-lg">
           <h2 className="text-lg font-semibold">Messages</h2>
           <p className="text-gray-500 text-sm mt-1">

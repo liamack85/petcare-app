@@ -25,12 +25,15 @@ export default async function ClientDashboard() {
           <h2 className="text-lg font-semibold">My Pets</h2>
           <p className="text-gray-500 text-sm mt-1">Manage your pet profiles</p>
         </Link>
-        <div className="p-6 border rounded-lg">
+        <Link
+          href="/dashboard/client/appointments"
+          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+        >
           <h2 className="text-lg font-semibold">Appointments</h2>
           <p className="text-gray-500 text-sm mt-1">
             View and request appointments
           </p>
-        </div>
+        </Link>
         <div className="p-6 border rounded-lg">
           <h2 className="text-lg font-semibold">Visit Reports</h2>
           <p className="text-gray-500 text-sm mt-1">

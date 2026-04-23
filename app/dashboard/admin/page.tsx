@@ -14,16 +14,57 @@ export default async function AdminDashboard() {
     where: { status: "PENDING" },
   });
 
+  const totalClients = await prisma.user.count({
+    where: { role: "CLIENT" },
+  });
+
+  const totalEmployees = await prisma.user.count({
+    where: { role: "EMPLOYEE" },
+  });
+
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-      <p className="text-gray-500">Welcome back, {user.name}!</p>
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="p-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 mt-1">
+          Here&apos;s an overview of your business
+        </p>
+      </div>
+
+      {/* Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-xl border border-gray-100">
+          <p className="text-sm text-gray-500">Pending Requests</p>
+          <p className="text-3xl font-bold text-yellow-600 mt-1">
+            {pendingCount}
+          </p>
+        </div>
+        <div className="bg-white p-6 rounded-xl border border-gray-100">
+          <p className="text-sm text-gray-500">Total Clients</p>
+          <p className="text-3xl font-bold text-blue-600 mt-1">
+            {totalClients}
+          </p>
+        </div>
+        <div className="bg-white p-6 rounded-xl border border-gray-100">
+          <p className="text-sm text-gray-500">Total Employees</p>
+          <p className="text-3xl font-bold text-blue-600 mt-1">
+            {totalEmployees}
+          </p>
+        </div>
+      </div>
+
+      {/* Nav Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/dashboard/admin/appointments"
-          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+          className="bg-white p-6 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all"
         >
-          <h2 className="text-lg font-semibold">Appointments</h2>
+          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+            <span className="text-xl">📅</span>
+          </div>
+          <h2 className="text-base font-semibold text-gray-900">
+            Appointments
+          </h2>
           <p className="text-gray-500 text-sm mt-1">
             Manage and assign appointments
           </p>
@@ -35,24 +76,39 @@ export default async function AdminDashboard() {
         </Link>
         <Link
           href="/dashboard/admin/calendar"
-          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+          className="bg-white p-6 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all"
         >
-          <h2 className="text-lg font-semibold">Calendar</h2>
+          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+            <span className="text-xl">🗓️</span>
+          </div>
+          <h2 className="text-base font-semibold text-gray-900">Calendar</h2>
           <p className="text-gray-500 text-sm mt-1">View all appointments</p>
         </Link>
-        <div className="p-6 border rounded-lg">
-          <h2 className="text-lg font-semibold">Employees</h2>
+        <Link
+          href="/dashboard/admin/employees"
+          className="bg-white p-6 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all"
+        >
+          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+            <span className="text-xl">👥</span>
+          </div>
+          <h2 className="text-base font-semibold text-gray-900">Employees</h2>
           <p className="text-gray-500 text-sm mt-1">
             View and manage your team
           </p>
-        </div>
-        <div className="p-6 border rounded-lg">
-          <h2 className="text-lg font-semibold">Clients</h2>
+        </Link>
+        <Link
+          href="/dashboard/admin/clients"
+          className="bg-white p-6 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all"
+        >
+          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+            <span className="text-xl">🐶</span>
+          </div>
+          <h2 className="text-base font-semibold text-gray-900">Clients</h2>
           <p className="text-gray-500 text-sm mt-1">
             View all clients and their pets
           </p>
-        </div>
+        </Link>
       </div>
-    </main>
+    </div>
   );
 }

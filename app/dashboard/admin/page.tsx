@@ -7,10 +7,7 @@ export default async function AdminDashboard() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || user.role !== "ADMIN") redirect("/dashboard");
 
   const pendingCount = await prisma.appointment.count({
@@ -35,6 +32,13 @@ export default async function AdminDashboard() {
               {pendingCount} pending request{pendingCount > 1 ? "s" : ""}
             </p>
           )}
+        </Link>
+        <Link
+          href="/dashboard/admin/calendar"
+          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+        >
+          <h2 className="text-lg font-semibold">Calendar</h2>
+          <p className="text-gray-500 text-sm mt-1">View all appointments</p>
         </Link>
         <div className="p-6 border rounded-lg">
           <h2 className="text-lg font-semibold">Employees</h2>

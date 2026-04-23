@@ -7,10 +7,7 @@ export default async function ClientDashboard() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || user.role !== "CLIENT") redirect("/dashboard");
 
   return (
@@ -43,12 +40,15 @@ export default async function ClientDashboard() {
             See reports and photos from visits
           </p>
         </Link>
-        <div className="p-6 border rounded-lg">
-          <h2 className="text-lg font-semibold">Messages</h2>
+        <Link
+          href="/dashboard/client/calendar"
+          className="p-6 border rounded-lg hover:border-gray-400 transition-colors"
+        >
+          <h2 className="text-lg font-semibold">Calendar</h2>
           <p className="text-gray-500 text-sm mt-1">
-            Communicate with your care team
+            View your upcoming appointments
           </p>
-        </div>
+        </Link>
       </div>
     </main>
   );

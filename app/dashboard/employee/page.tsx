@@ -36,7 +36,16 @@ export default async function EmployeeDashboard() {
       <h1 className="text-3xl font-bold mb-2">Employee Dashboard</h1>
       <p className="text-gray-500">Welcome back, {user.name}!</p>
 
-      <div className="mt-8">
+      <div className="mt-6 mb-8">
+        <Link
+          href="/dashboard/employee/calendar"
+          className="inline-block bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 text-sm"
+        >
+          View My Calendar
+        </Link>
+      </div>
+
+      <div className="mt-4">
         <h2 className="text-xl font-semibold mb-4">Upcoming Appointments</h2>
         {upcoming.length === 0 ? (
           <div className="text-center py-10 border rounded-lg">

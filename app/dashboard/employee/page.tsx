@@ -7,23 +7,12 @@ export default async function EmployeeDashboard() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || user.role !== "EMPLOYEE") redirect("/dashboard");
 
   const appointments = await prisma.appointment.findMany({
-    where: {
-      employeeId: userId,
-      status: "APPROVED",
-    },
-    include: {
-      pet: true,
-      client: true,
-      services: true,
-      report: true,
-    },
+    where: { employeeId: userId, status: "APPROVED" },
+    include: { pet: true, client: true, services: true, report: true },
     orderBy: { date: "asc" },
   });
 
@@ -32,34 +21,45 @@ export default async function EmployeeDashboard() {
   const past = appointments.filter((a) => new Date(a.date) < today);
 
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold mb-2">Employee Dashboard</h1>
-      <p className="text-gray-500">Welcome back, {user.name}!</p>
-
-      <div className="mt-6 mb-8">
-        <Link
-          href="/dashboard/employee/calendar"
-          className="inline-block bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 text-sm"
-        >
-          View My Calendar
-        </Link>
+    <div className="p-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 mt-1">
+          Here&apos;s your schedule for today and upcoming visits
+        </p>
       </div>
 
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold mb-4">Upcoming Appointments</h2>
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Upcoming Appointments
+        </h2>
         {upcoming.length === 0 ? (
-          <div className="text-center py-10 border rounded-lg">
+          <div className="text-center py-10 bg-white border border-gray-100 rounded-xl">
             <p className="text-gray-500">No upcoming appointments</p>
           </div>
         ) : (
           <div className="space-y-4">
             {upcoming.map((appointment) => (
-              <div key={appointment.id} className="p-6 border rounded-lg">
+              <div
+                key={appointment.id}
+                className="bg-white p-6 rounded-xl border border-gray-100"
+              >
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="font-semibold text-lg">
-                      {appointment.pet.name}
-                    </p>
+                    <div className="flex items-center gap-3 mb-1">
+                      <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                        <span className="text-sm">
+                          {appointment.pet.species === "Dog"
+                            ? "🐕"
+                            : appointment.pet.species === "Cat"
+                              ? "🐈"
+                              : "🐾"}
+                        </span>
+                      </div>
+                      <p className="font-semibold text-gray-900">
+                        {appointment.pet.name}
+                      </p>
+                    </div>
                     <p className="text-gray-500 text-sm">
                       Owner:{" "}
                       {appointment.client.name || appointment.client.email}
@@ -78,7 +78,7 @@ export default async function EmployeeDashboard() {
                       {appointment.services.map((service) => (
                         <span
                           key={service.id}
-                          className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                          className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full"
                         >
                           {service.serviceType}
                         </span>
@@ -90,7 +90,7 @@ export default async function EmployeeDashboard() {
                       </p>
                     )}
                   </div>
-                  <div className="text-right">
+                  <div>
                     {appointment.report ? (
                       <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
                         Report Filed
@@ -112,17 +112,21 @@ export default async function EmployeeDashboard() {
       </div>
 
       {past.length > 0 && (
-        <div className="mt-10">
-          <h2 className="text-xl font-semibold mb-4">Past Appointments</h2>
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Past Appointments
+          </h2>
           <div className="space-y-4">
             {past.map((appointment) => (
               <div
                 key={appointment.id}
-                className="p-6 border rounded-lg opacity-60"
+                className="bg-white p-6 rounded-xl border border-gray-100 opacity-60"
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="font-semibold">{appointment.pet.name}</p>
+                    <p className="font-semibold text-gray-900">
+                      {appointment.pet.name}
+                    </p>
                     <p className="text-gray-500 text-sm">
                       {new Date(appointment.date).toLocaleDateString("en-US", {
                         weekday: "long",
@@ -136,7 +140,7 @@ export default async function EmployeeDashboard() {
                       {appointment.services.map((service) => (
                         <span
                           key={service.id}
-                          className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                          className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full"
                         >
                           {service.serviceType}
                         </span>
@@ -161,6 +165,6 @@ export default async function EmployeeDashboard() {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }

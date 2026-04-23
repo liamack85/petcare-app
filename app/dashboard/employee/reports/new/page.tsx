@@ -16,7 +16,6 @@ export default async function NewReportPage({
   if (!user || user.role !== "EMPLOYEE") redirect("/dashboard");
 
   const { appointmentId } = await searchParams;
-
   if (!appointmentId) redirect("/dashboard/employee");
 
   const appointment = await prisma.appointment.findUnique({
@@ -29,15 +28,17 @@ export default async function NewReportPage({
   }
 
   return (
-    <main className="p-8 max-w-2xl">
+    <div className="p-8 max-w-2xl">
       <div className="mb-8">
         <Link
           href="/dashboard/employee"
-          className="text-gray-500 hover:text-black text-sm"
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
         >
           ← Back to Dashboard
         </Link>
-        <h1 className="text-3xl font-bold mt-4">File Visit Report</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-4">
+          File Visit Report
+        </h1>
         <p className="text-gray-500 mt-1">
           {appointment.pet.name} —{" "}
           {new Date(appointment.date).toLocaleDateString("en-US", {
@@ -47,7 +48,9 @@ export default async function NewReportPage({
           })}
         </p>
       </div>
-      <VisitReportForm appointmentId={appointmentId} employeeId={userId} />
-    </main>
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
+        <VisitReportForm appointmentId={appointmentId} employeeId={userId} />
+      </div>
+    </div>
   );
 }

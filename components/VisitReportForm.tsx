@@ -75,76 +75,86 @@ export default function VisitReportForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           Visit Notes <span className="text-red-500">*</span>
         </label>
         <textarea
           name="notes"
           required
           rows={4}
-          className="w-full border rounded-lg px-3 py-2 text-sm"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
           placeholder="How did the visit go? Any observations about the pet's behavior, health, or mood?"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           Duration (minutes)
         </label>
         <input
           name="duration"
           type="number"
           min="1"
-          className="w-full border rounded-lg px-3 py-2 text-sm"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
           placeholder="e.g. 30"
         />
       </div>
 
       <div className="space-y-3">
-        <label className="block text-sm font-medium">Checklist</label>
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" name="feedingDone" className="w-4 h-4" />
-          <span className="text-sm">Feeding completed</span>
+        <label className="block text-sm font-medium text-gray-700">
+          Checklist
         </label>
         <label className="flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" name="waterDone" className="w-4 h-4" />
-          <span className="text-sm">Fresh water provided</span>
+          <input
+            type="checkbox"
+            name="feedingDone"
+            className="w-4 h-4 accent-blue-600"
+          />
+          <span className="text-sm text-gray-700">Feeding completed</span>
+        </label>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="waterDone"
+            className="w-4 h-4 accent-blue-600"
+          />
+          <span className="text-sm text-gray-700">Fresh water provided</span>
         </label>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Photos</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Photos
+        </label>
         <input
           type="file"
           accept="image/*"
           multiple
           onChange={handlePhotoUpload}
-          className="w-full border rounded-lg px-3 py-2 text-sm"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
         />
         {uploading && (
           <p className="text-gray-500 text-sm mt-2">Uploading photos...</p>
         )}
         {photos.length > 0 && (
-          <div className="mt-3 grid grid-cols-3 gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             {photos.map((url, i) => (
-              <div key={i} className="relative w-full h-24">
-                <Image
-                  src={url}
-                  alt={`Upload ${i + 1}`}
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </div>
+              <img
+                key={i}
+                src={url}
+                alt={`Upload ${i + 1}`}
+                className="max-h-24 w-auto rounded-lg object-contain"
+              />
             ))}
           </div>
         )}
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 pt-2">
         <button
           type="submit"
           disabled={loading || uploading}
-          className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-50"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium disabled:opacity-50"
         >
           {loading ? "Submitting..." : "Submit Report"}
         </button>

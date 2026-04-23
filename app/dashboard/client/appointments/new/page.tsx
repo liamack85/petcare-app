@@ -13,7 +13,6 @@ export default async function NewAppointmentPage() {
   });
 
   if (!user || user.role !== "CLIENT") redirect("/dashboard");
-
   if (user.pets.length === 0) redirect("/dashboard/client/pets/new");
 
   async function createAppointment(formData: FormData) {
@@ -42,102 +41,108 @@ export default async function NewAppointmentPage() {
   }
 
   return (
-    <main className="p-8 max-w-2xl">
+    <div className="p-8 max-w-2xl">
       <div className="mb-8">
         <Link
           href="/dashboard/client/appointments"
-          className="text-gray-500 hover:text-black text-sm"
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
         >
           ← Back to Appointments
         </Link>
-        <h1 className="text-3xl font-bold mt-4">Request Appointment</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-4">
+          Request Appointment
+        </h1>
         <p className="text-gray-500 mt-1">
           Fill in the details for your appointment
         </p>
       </div>
 
-      <form action={createAppointment} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Pet <span className="text-red-500">*</span>
-          </label>
-          <select
-            name="petId"
-            required
-            className="w-full border rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="">Select a pet</option>
-            {user.pets.map((pet) => (
-              <option key={pet.id} value={pet.id}>
-                {pet.name} ({pet.species})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Date & Time <span className="text-red-500">*</span>
-          </label>
-          <input
-            name="date"
-            type="datetime-local"
-            required
-            className="w-full border rounded-lg px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            Services <span className="text-red-500">*</span>
-          </label>
-          <div className="space-y-2">
-            {["WALK", "SITTING", "FEEDING", "GROOMING", "MEDICATION"].map(
-              (service) => (
-                <label
-                  key={service}
-                  className="flex items-center gap-3 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    name="services"
-                    value={service}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm capitalize">
-                    {service.charAt(0) + service.slice(1).toLowerCase()}
-                  </span>
-                </label>
-              ),
-            )}
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
+        <form action={createAppointment} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Pet <span className="text-red-500">*</span>
+            </label>
+            <select
+              name="petId"
+              required
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">Select a pet</option>
+              {user.pets.map((pet) => (
+                <option key={pet.id} value={pet.id}>
+                  {pet.name} ({pet.species})
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Notes</label>
-          <textarea
-            name="notes"
-            rows={3}
-            className="w-full border rounded-lg px-3 py-2 text-sm"
-            placeholder="Any special instructions or notes for this appointment"
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Date & Time <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="date"
+              type="datetime-local"
+              required
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            />
+          </div>
 
-        <div className="flex gap-4">
-          <button
-            type="submit"
-            className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 text-sm"
-          >
-            Request Appointment
-          </button>
-          <Link
-            href="/dashboard/client/appointments"
-            className="px-6 py-2 rounded-lg border hover:bg-gray-50 text-sm flex items-center"
-          >
-            Cancel
-          </Link>
-        </div>
-      </form>
-    </main>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Services <span className="text-red-500">*</span>
+            </label>
+            <div className="space-y-2">
+              {["WALK", "SITTING", "FEEDING", "GROOMING", "MEDICATION"].map(
+                (service) => (
+                  <label
+                    key={service}
+                    className="flex items-center gap-3 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service}
+                      className="w-4 h-4 accent-blue-600"
+                    />
+                    <span className="text-sm text-gray-700 capitalize">
+                      {service.charAt(0) + service.slice(1).toLowerCase()}
+                    </span>
+                  </label>
+                ),
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Notes
+            </label>
+            <textarea
+              name="notes"
+              rows={3}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+              placeholder="Any special instructions or notes for this appointment"
+            />
+          </div>
+
+          <div className="flex gap-4 pt-2">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
+            >
+              Request Appointment
+            </button>
+            <Link
+              href="/dashboard/client/appointments"
+              className="px-6 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm text-gray-600 flex items-center"
+            >
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

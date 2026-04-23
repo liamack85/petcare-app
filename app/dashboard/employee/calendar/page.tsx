@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import AppointmentCalendar from "@/components/AppointmentCalendar";
 
 export default async function EmployeeCalendarPage() {
@@ -30,22 +29,14 @@ export default async function EmployeeCalendarPage() {
   }));
 
   return (
-    <main className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold">My Schedule</h1>
-          <p className="text-gray-500 mt-1">View your upcoming appointments</p>
-        </div>
-        <Link
-          href="/dashboard/employee"
-          className="text-gray-500 hover:text-black text-sm"
-        >
-          ← Back to Dashboard
-        </Link>
+    <div className="p-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">My Schedule</h1>
+        <p className="text-gray-500 mt-1">View your upcoming appointments</p>
       </div>
-      <div className="border rounded-lg p-4">
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
         <AppointmentCalendar events={events} />
       </div>
-    </main>
+    </div>
   );
 }

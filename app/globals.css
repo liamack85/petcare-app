@@ -36,3 +36,68 @@ input::placeholder,
 textarea::placeholder {
   color: #9ca3af;
 }
+
+/* React Big Calendar overrides */
+.rbc-calendar {
+  color: #111827;
+}
+
+.rbc-header {
+  color: #374151;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.rbc-date-cell {
+  color: #374151;
+  padding: 4px 8px;
+}
+
+.rbc-off-range {
+  color: #9ca3af;
+}
+
+.rbc-off-range-bg {
+  background-color: #f9fafb;
+}
+
+.rbc-today {
+  background-color: #eff6ff;
+}
+
+.rbc-button-link {
+  color: #374151;
+}
+
+.rbc-toolbar button {
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.rbc-toolbar button.rbc-active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.rbc-toolbar-label {
+  color: #111827;
+  font-weight: 600;
+}
+
+.rbc-month-view,
+.rbc-time-view,
+.rbc-agenda-view {
+  border-color: #e5e7eb;
+}
+
+.rbc-day-bg + .rbc-day-bg,
+.rbc-month-row + .rbc-month-row,
+.rbc-header + .rbc-header {
+  border-color: #e5e7eb;
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -6,10 +7,13 @@ export default function HomePage() {
       {/* Nav */}
       <nav className="border-b border-gray-100 px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm font-bold">P</span>
-          </div>
-          <span className="font-semibold text-gray-900">PawCare</span>
+          <Image
+            src="/a-plus-pets-logo.webp"
+            alt="A-Plus Pets"
+            width={40}
+            height={40}
+          />
+          <span className="font-semibold text-gray-900">A-Plus Pets</span>
         </div>
         <div className="flex items-center gap-4">
           <Link

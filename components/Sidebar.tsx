@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 type NavItem = {
   label: string;
@@ -41,10 +42,14 @@ export default function Sidebar({ role }: { role: string }) {
       {/* Logo */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm font-bold">P</span>
-          </div>
-          <span className="font-semibold text-gray-900">PawCare</span>
+          <Image
+            src="/a-plus-pets-logo.webp"
+            alt="A-Plus Pets"
+            width={40}
+            height={40}
+            className="rounded-lg"
+          />
+          <span className="font-semibold text-gray-900">A-Plus Pets</span>
         </div>
         <p className="text-xs text-gray-400 mt-1 capitalize">
           {role.toLowerCase()} account
